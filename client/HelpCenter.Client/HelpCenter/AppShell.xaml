@@ -8,6 +8,10 @@
     Shell.FlyoutBehavior="Flyout"
     Title="HelpCenter">
 
+    <ShellItem Route="LoginPage">
+        <ShellContent ContentTemplate="{DataTemplate pages:LoginPage}"/>
+    </ShellItem>
+
     <ShellContent
         Title="Dashboard"
         Icon="{StaticResource IconDashboard}"

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:HelpCenter.PageModels"             
+             xmlns:models="clr-namespace:HelpCenter.Models"
+             xmlns:controls="clr-namespace:HelpCenter.Pages.Controls"
+             xmlns:pullToRefresh="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="HelpCenter.Pages.LoginPage"
+             x:DataType="pageModels:LoginViewModel"
+             Shell.NavBarIsVisible="false">
+
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand" IsVisible="{Binding IsVisible}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" />
+            <Image x:Name="MainBackground" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <StackLayout Padding="0,0,0,0">
+                <!--<Frame BackgroundColor="White" CornerRadius="25" Margin="15,15,15,26" Padding="0,0,0,27">
+                    <StackLayout>
+
+                        <Line>
+                            <Line.Background>
+                                <LinearGradientBrush StartPoint="0,-1" EndPoint="0,1">
+                                    <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.65"/>
+                                    <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Line.Background>
+                        </Line>
+
+                        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="19,12,19,12">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Наша игра " TextColor="{StaticResource NightWatchBlue}" FontSize="14" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="-2" LineHeight="0.85"/>
+                                    <Span Text="- это Российская игра флеш-моб в формате ночных поисковых игр, включающая в себя соревнования по городскому 
+                               ориентированию, актёрские и ролевые 
+                               уровни, экстремальные и логические 
+                               задания" FontSize="14" TextColor="{StaticResource NightWatchBlue}" FontFamily="RobotoMono" FontAttributes="None" CharacterSpacing="-2" LineHeight="0.85"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Line>
+                            <Line.Background >
+                                <LinearGradientBrush StartPoint="0,-1" EndPoint="0,1">
+                                    <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.65"/>
+                                    <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Line.Background>
+                        </Line>
+                    </StackLayout>
+                </Frame>-->
+
+                <Frame HasShadow="True"  BackgroundColor="White" CornerRadius="25" Margin="39,0, 39, 72" Padding="0">
+                    <StackLayout>
+                        <Label Text="{Binding LoginMessage}" IsVisible="true" TextColor="DarkRed" FontSize="12" />
+                        <!--<Label Text="Войдите, чтобы начать играть" FontSize="20" TextColor="{StaticResource NightWatchBlue}"
+                                   FontFamily="RobotoMono" FontAttributes="Bold" HorizontalTextAlignment="Center" CharacterSpacing="0" LineHeight="1" Margin="59,25,59,0"/>-->
+                        <Grid>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="userico.svg" Margin="20,32,6,0"/>
+                                <Entry TextColor="Black" Placeholder="Ник-нейм" HorizontalOptions="FillAndExpand" Text="{Binding UserLoginName}" Margin="0,24,43,0"/>
+                            </StackLayout>
+                        </Grid>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="lockico.svg" Margin="20,22,6,0"/>
+                            <Entry TextColor="Black" Placeholder="Пароль" HorizontalOptions="FillAndExpand" Text="{Binding UserPassword}" Margin="0,12,43,0"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+
+                            <Label Text="{Binding LoginMessage, Mode=OneWay}" IsVisible="{Binding TurnLoginMessage, Mode=OneWay}" TextColor="DarkRed" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                                   HorizontalTextAlignment="Center" CharacterSpacing="-1.25" LineHeight="1"  Margin="44,0,43,0"/>
+                        </StackLayout>
+                        <Button Text="Войти" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="43,12,43,0"
+                                    CornerRadius="20" Command="{Binding GoToMainPageCommand}">
+                            <!--<Button.Background>
+                                <LinearGradientBrush StartPoint="-1,0" EndPoint="1,0">
+                                    <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.5"/>
+                                    <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>-->
+                        </Button>
+                        <!--<Label Text="Забыли пароль?" TextColor="{StaticResource NightWatchBlue}" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                                       HorizontalTextAlignment="Center" CharacterSpacing="0" LineHeight="1" Margin="92,6,92,0" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToForgotPasswordCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Еще не зарегистрированы?" TextColor="{StaticResource NightWatchBlue}" FontSize="12" FontFamily="RobotoMono" FontAttributes="None"
+                                   HorizontalTextAlignment="Center" CharacterSpacing="0" LineHeight="1" Margin="57,50,50,0"/>
+                        <Button Text="Зарегистрироваться" TextColor="White" FontSize="12" FontFamily="RobotoMono" FontAttributes="Bold" CharacterSpacing="0" Margin="44,10,43,35"
+                                    CornerRadius="20" Command="{Binding GoToCreateAccountCommand}">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="-1,0" EndPoint="1,0">
+                                    <GradientStop Color="{StaticResource NightWatchBlue}" Offset="0.5"/>
+                                    <GradientStop Color="{StaticResource NightWatchPurple}" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>-->
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

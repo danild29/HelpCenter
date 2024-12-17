@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Common.Models.Response;
 using HelpCenter.Models;
+using Refit;
 
 namespace HelpCenter.Utilities
 {
@@ -16,6 +18,14 @@ namespace HelpCenter.Utilities
         public static bool IsNullOrNew([NotNullWhen(false)] this Project? project)
         {
             return project is null || project.ID == 0;
+        }
+    }
+
+    public static class RefitExtensions
+    {
+        public static async Task<ErrorResponse?> Err(this ApiException ex)
+        {
+            return await ex.GetContentAsAsync<ErrorResponse>();
         }
     }
 }

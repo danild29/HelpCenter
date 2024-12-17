@@ -1,46 +1,57 @@
-using System.Security.Claims;
 using AspNetCore.Identity.Database;
 using AspNetCore.Identity.Extensions;
+using HelpCenter.Api;
+using HelpCenter.Api.EndPoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+const string AllPolicyName = "AllPolicy";
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddCookie(IdentityConstants.ApplicationScheme)
-    .AddBearerToken(IdentityConstants.BearerScheme);
-
-builder.Services.AddIdentityCore<User>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddApiEndpoints();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
-
-WebApplication app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+    builder.Services
+        .ConfigureLogging()
+        .ConfigureSwagger();
 
-    app.ApplyMigrations();
+    builder.Services.AddSerilog(Log.Logger);
+
+    builder.Services.AddCors(o => o.AddPolicy(AllPolicyName, builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+    builder.Services.AddAuthentication()
+        .AddBearerToken(IdentityConstants.BearerScheme);
+
+    builder.Services.AddAuthorizationBuilder();
+
+    builder.Services.AddIdentityCore<User>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddApiEndpoints();
+
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+
+    WebApplication app = builder.Build();
+    app.UseSerilogRequestLogging();
+
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        app.ApplyMigrations();
+    }
+
+    app.UseHttpsRedirection();
+    app.MapIdentityApi<User>();
+
+    app.AddEndpoints();
+    _ = app.UseCors(AllPolicyName);
+    Log.Logger.Information("App start");
+    await app.RunAsync();
 }
-
-app.MapGet("users/me", async (ClaimsPrincipal claims, ApplicationDbContext context) =>
+catch (Exception ex)
 {
-    string userId = claims.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-
-    return await context.Users.FindAsync(userId);
-})
-.RequireAuthorization();
-
-app.UseHttpsRedirection();
-
-app.MapIdentityApi<User>();
-
-app.Run();
+    Log.Logger.Error(ex, "Error in program");
+}
