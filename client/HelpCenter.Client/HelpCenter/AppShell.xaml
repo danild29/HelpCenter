@@ -13,6 +13,12 @@
     </ShellItem>
 
     <ShellContent
+        Title="Events"
+        Icon="{StaticResource IconDashboard}"
+        ContentTemplate="{DataTemplate pages:EventListPage}"
+        Route="events" />
+    
+    <ShellContent
         Title="Dashboard"
         Icon="{StaticResource IconDashboard}"
         ContentTemplate="{DataTemplate pages:MainPage}"

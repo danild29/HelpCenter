@@ -1,6 +1,15 @@
 ﻿
+using Common.Models.Response;
+
 namespace HelpCenter.Data.Http;
-internal class ApiManager
+public class ApiManager
 {
     public string BearerToken { get; set; }
+    public string RefreshToken { get; set; }
+
+    public void SetTokens(TokenResponse res)
+    {
+        BearerToken = res.accessToken;
+        RefreshToken = res.refreshToken;
+    }
 }

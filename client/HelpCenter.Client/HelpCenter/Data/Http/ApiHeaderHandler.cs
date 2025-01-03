@@ -9,8 +9,12 @@ internal class ApiHeaderHandler(ApiManager apiManager) : DelegatingHandler
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
                                                                  CancellationToken cancellationToken)
     {
-        string token = _apiManager.BearerToken;
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        return await base.SendAsync(request, cancellationToken);
+        if (!string.IsNullOrEmpty(_apiManager.BearerToken))
+        {
+            string token = _apiManager.BearerToken;
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+        var result =  await base.SendAsync(request, cancellationToken);
+        return result;
     }
 }

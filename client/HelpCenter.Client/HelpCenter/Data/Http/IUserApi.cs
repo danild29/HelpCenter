@@ -1,4 +1,5 @@
-﻿using Common.Models.Request;
+﻿using Common.Models.Database;
+using Common.Models.Request;
 using Common.Models.Response;
 using Refit;
 
@@ -14,6 +15,18 @@ public interface IUserApi
 
     [Post("/refresh")]
     Task<TokenResponse> Refresh([Body] RefreshTokenRequest user, CancellationToken cancellationToken = default);
+
+    [Get("/event")]
+    Task<List<EventDto>> EventList(CancellationToken cancellationToken = default);
+
+    [Get("/event/{id}")]
+    Task<EventDto> GetEvent([AliasAs("id")] Guid id);
+
+    [Post("/event/signIn")]
+    Task<UserEventDto> SignInEvent([Body] SignInRequest requesst);
+
+    [Post("/event")]
+    Task<EventDto> CreateEvent([Body] EventCreateRequest request);
 }
 
 //public class UserData : IDisposable

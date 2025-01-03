@@ -6,6 +6,14 @@ using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace HelpCenter;
 
+public class Routes
+{
+    public const string EventDetailPage = "event";
+    public const string EventCreatePage = "create-event";
+    public const string ProjectDetailPage = "project";
+    public const string TaskDetailPage = "task";
+}
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -45,11 +53,15 @@ public static class MauiProgram
         builder.Services.AddSingleton<ModalErrorHandler>();
         builder.Services.AddSingleton<MainPageModel>();
         builder.Services.AddSingleton<ProjectListPageModel>();
+        builder.Services.AddSingleton<EventListPageModel>();
         builder.Services.AddSingleton<ManageMetaPageModel>();
         builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddSingleton<ApiManager>();
 
-        builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
-        builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
+        builder.Services.AddTransientWithShellRoute<EventDetailPage, EventDetailPageModel>(Routes.EventDetailPage);
+        builder.Services.AddTransientWithShellRoute<EventCreatePage, EventCreatePageModel>(Routes.EventCreatePage);
+        builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>(Routes.ProjectDetailPage);
+        builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>(Routes.TaskDetailPage);
 
         return builder.Build();
     }

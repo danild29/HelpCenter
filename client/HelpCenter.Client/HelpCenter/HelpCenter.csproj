@@ -82,7 +82,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\EventCreatePage.xaml.cs">
+	    <DependentUpon>EventCreatePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\EventListPage.xaml.cs">
+	    <DependentUpon>EventListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\EventDetailPage.xaml.cs">
+	    <DependentUpon>EventDetailPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\EventCreatePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\EventListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\EventDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

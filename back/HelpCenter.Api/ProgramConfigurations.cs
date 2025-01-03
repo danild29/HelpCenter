@@ -30,6 +30,7 @@ public static class ProgramConfigurations
                  outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] <{RequestId}> ({SourceContext}) {Method}#{LineNumber} > {Message:lj}{NewLine}{Exception}",
                  shared: true,
                  restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information))
+            .WriteTo.Console()
             .ReadFrom.Configuration(configuration)
             .CreateLogger();
 

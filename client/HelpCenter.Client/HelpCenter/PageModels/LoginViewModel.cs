@@ -12,10 +12,10 @@ public partial class LoginViewModel : ObservableObject
 
     public IUserApi _userData { get; }
 
-    public LoginViewModel(IUserApi userData)
+    public LoginViewModel(IUserApi userData, ApiManager apiManager)
     {
         _userData = userData;
-
+        this.apiManager = apiManager;
     }
     [ObservableProperty] private string userLoginName = string.Empty;
     [ObservableProperty] private string userPassword = string.Empty;
@@ -26,6 +26,8 @@ public partial class LoginViewModel : ObservableObject
 
     [ObservableProperty] private bool isBusy = false;
     [ObservableProperty] private bool isVisible = true;
+    private readonly ApiManager apiManager;
+
     partial void OnIsBusyChanged(bool oldValue, bool newValue) => IsVisible = !newValue;
 
     //public async Task GetDataFromPrefernces()
@@ -72,8 +74,12 @@ public partial class LoginViewModel : ObservableObject
         UserMainInfo user = new UserMainInfo { email = UserLoginName, password = UserPassword };
         try
         {
-            var er = await _userData.Login(user);
-            await Shell.Current.GoToAsync("//main");
+            user.email = "string@gmail.com";
+            user.password = "string1A!";
+            var res = await _userData.Login(user);
+            apiManager.SetTokens(res);
+            var route = "//events";
+            await Shell.Current.GoToAsync(route);
             //if (er == null)
             //{
             //    Preferences.Default.Set(nameof(UserLoginDto), JsonSerializer.Serialize(user));

@@ -1,4 +1,4 @@
-﻿using AspNetCore.Identity.Database;
+﻿using HelpCenter.Api.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.Identity.Extensions;

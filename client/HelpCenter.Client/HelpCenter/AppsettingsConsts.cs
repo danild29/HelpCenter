@@ -2,5 +2,5 @@
 
 public class AppsettingsConsts
 {
-    public static string ApiUrl => "https://localhost:58355/";
+    public static string ApiUrl => "https://localhost:41001/";
 }

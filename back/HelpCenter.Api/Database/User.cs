@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCore.Identity.Database;
+namespace HelpCenter.Api.Database;
 
 public class User : IdentityUser
 {

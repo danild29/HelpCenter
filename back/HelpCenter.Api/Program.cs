@@ -1,6 +1,6 @@
-using AspNetCore.Identity.Database;
 using AspNetCore.Identity.Extensions;
 using HelpCenter.Api;
+using HelpCenter.Api.Database;
 using HelpCenter.Api.EndPoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +41,7 @@ try
         app.UseSwaggerUI();
 
         app.ApplyMigrations();
+        app.UseExceptionHandler("/Error");
     }
 
     app.UseHttpsRedirection();

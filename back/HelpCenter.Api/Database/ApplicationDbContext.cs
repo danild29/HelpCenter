@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.Identity.Database;
+namespace HelpCenter.Api.Database;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
+    public virtual DbSet<Event> Events { get; set; }
+    public virtual DbSet<UserEvent> Participants { get; set; }
+    public virtual DbSet<Post> Posts { get; set; }
+    public virtual DbSet<Message> Messages { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
