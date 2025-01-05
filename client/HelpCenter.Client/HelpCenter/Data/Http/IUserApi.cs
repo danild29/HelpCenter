@@ -8,7 +8,7 @@ namespace HelpCenter.Data.Http;
 public interface IUserApi
 {
     [Post("/register")]
-    Task<BaseResponse> Register([Body] UserMainInfo user, CancellationToken cancellationToken = default);
+    Task Register([Body] UserMainInfo user, CancellationToken cancellationToken = default);
 
     [Post("/login")]
     Task<TokenResponse> Login([Body] UserMainInfo user, CancellationToken cancellationToken = default);
@@ -27,6 +27,12 @@ public interface IUserApi
 
     [Post("/event")]
     Task<EventDto> CreateEvent([Body] EventCreateRequest request);
+
+    [Post("/message")]
+    Task<MessageDto> AddComment([Body] CreateMessageRequest request);
+
+    [Post("/post")]
+    Task<PostDto> AddPost([Body] CreatePostRequest request);
 }
 
 //public class UserData : IDisposable

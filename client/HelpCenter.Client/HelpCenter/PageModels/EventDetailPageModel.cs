@@ -2,12 +2,8 @@ using Common.Models.Database;
 using Common.Models.Request;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HelpCenter.Data;
 using HelpCenter.Data.Http;
 using HelpCenter.Models;
-using HelpCenter.Services;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace HelpCenter.PageModels
 {
@@ -23,6 +19,21 @@ namespace HelpCenter.PageModels
 
 
         // ============== fields
+
+
+
+        [ObservableProperty]
+        private bool _isCreator = false;
+
+        [ObservableProperty]
+        private string _postTitle = string.Empty;
+
+        [ObservableProperty]
+        private string _postContent = string.Empty;
+
+        [ObservableProperty]
+        private string _comment = string.Empty;
+
         [ObservableProperty]
         private string _title = string.Empty;
 
@@ -112,7 +123,7 @@ namespace HelpCenter.PageModels
             }
             else
             {
-                
+
             }
         }
 
@@ -153,6 +164,7 @@ namespace HelpCenter.PageModels
                 City = _event.City;
                 Description = _event.Description;
                 Address = _event.Address;
+                IsCreator = _event.IsCreator;
 
                 //Categories = await _categoryRepository.ListAsync();
                 //Category = Categories?.FirstOrDefault(c => c.ID == _project.CategoryID);
@@ -182,6 +194,40 @@ namespace HelpCenter.PageModels
             {
                 SignInRequest req = new(_event!.Id);
                 UserEventDto res = await api.SignInEvent(req);
+                await LoadData(_event!.Id);
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.HandleError(ex);
+            }
+        }
+
+        [RelayCommand]
+        private async Task AddComment(Guid postId)
+        {
+            try
+            {
+                CreateMessageRequest request = new CreateMessageRequest(Comment, postId);
+                MessageDto res = await api.AddComment(request);
+                Comment = string.Empty;
+                await LoadData(_event!.Id);
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.HandleError(ex);
+            }
+        }
+        
+        [RelayCommand]
+        private async Task AddPost()
+        {
+            try
+            {
+                CreatePostRequest request = new CreatePostRequest(PostTitle, PostContent, _event!.Id);
+                PostDto res = await api.AddPost(request);
+                PostTitle = string.Empty;
+                PostContent = string.Empty;
+                await LoadData(_event!.Id);
             }
             catch (Exception ex)
             {

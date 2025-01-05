@@ -109,8 +109,7 @@ public partial class LoginViewModel : ObservableObject
     [RelayCommand]
     private void GoToCreateAccount(object obj)
     {
-        // obj is null?
-        //Shell.Current.GoToAsync(nameof(CreateAccountPage));
+        Shell.Current.GoToAsync(Routes.CreateAccountPage);
     }
 
     [RelayCommand]

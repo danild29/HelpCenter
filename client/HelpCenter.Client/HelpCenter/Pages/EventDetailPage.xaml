@@ -106,33 +106,30 @@
                         BindableLayout.ItemTemplateSelector="{StaticResource ChipDataTemplateSelector}"/>
                 </ScrollView>
 
-                <Button Text="SignIn" 
+                <Button Text="Записаться на мероприятие" 
                     HeightRequest="{OnIdiom 44, Desktop=60}"
                     Command="{Binding SignInCommand}" />
 
-                <Grid>
-                    <VerticalStackLayout 
-                    BindableLayout.ItemsSource="{Binding Participant}" 
-                    Margin="{StaticResource LayoutPadding}" 
-                    Spacing="{StaticResource LayoutSpacing}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="apimodels:UserDto">
-                                        <Border>
-                                            <VerticalStackLayout Padding="10">
-                                                <Label Text="{Binding UserName}" FontSize="24" />
-                                                <Label Text="{Binding PhoneNumber}" />
-                                            </VerticalStackLayout>
-                                            <!--<Border.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding NavigateToProjectCommand, Source={RelativeSource AncestorType={x:Type pageModels:EventListPageModel}}, x:DataType=pageModels:EventListPageModel}" CommandParameter="{Binding .}"/>
-                                            </Border.GestureRecognizers>-->
-                                        </Border>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
+                <Label Text="Посты" FontSize="24" HorizontalOptions="Center" />
 
+                <Grid IsVisible="{Binding IsCreator}">
+                    <Border>
+                        <StackLayout>
+                            <sf:SfTextInputLayout>
+                                <Entry Text="{Binding PostTitle}" />
+                            </sf:SfTextInputLayout>
+
+                            <sf:SfTextInputLayout>
+                                <Entry Text="{Binding PostContent}" />
+                            </sf:SfTextInputLayout>
+    
+                            <Button Text="Добавить пост" 
+                                HeightRequest="{OnIdiom 44, Desktop=60}"
+                                Command="{Binding AddPostCommand}" />
+                        </StackLayout>
+                    </Border>
                 </Grid>
 
-                <Label Text="Посты" FontSize="24" HorizontalOptions="Center" />
 
                 <Grid>
                     <VerticalStackLayout 
@@ -154,13 +151,31 @@
                                             </toolkit:Expander.Header>
                                             <toolkit:Expander.Content>
                                                 <StackLayout>
-                                                    <CollectionView ItemsSource="{Binding Messages}">
-                                                        <CollectionView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Label Text="{Binding Content}" FontSize="12" />
+                                                    <VerticalStackLayout 
+                                                                 BindableLayout.ItemsSource="{Binding Messages}" 
+                                                                 Margin="{StaticResource LayoutPadding}" 
+                                                                 Spacing="{StaticResource LayoutSpacing}">
+                                                        <BindableLayout.ItemTemplate>
+                                                            <DataTemplate x:DataType="apimodels:MessageDto">
+                                                                <Border>
+                                                                    <StackLayout>
+                                                                        <Label Text="{Binding Created}" FontSize="12" />
+                                                                        <Label Text="{Binding Content}" FontSize="12" />
+                                                                    </StackLayout>
+                                                                </Border>
                                                             </DataTemplate>
-                                                        </CollectionView.ItemTemplate>
-                                                    </CollectionView>
+                                                        </BindableLayout.ItemTemplate>
+                                                    </VerticalStackLayout>
+
+                                                    <sf:SfTextInputLayout Hint="...">
+                                                        <Entry Text="{Binding Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, Path=Comment}" />
+                                                    </sf:SfTextInputLayout>
+
+                                                    <Button Text="Comment" 
+                                                        HeightRequest="{OnIdiom 44, Desktop=60}"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, Path=AddCommentCommand}"
+                                                        CommandParameter="{Binding Id}"
+                                                        />
                                                 </StackLayout>
                                             </toolkit:Expander.Content>
                                         </toolkit:Expander>
@@ -171,7 +186,30 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Grid>
-                
+
+                <Label Text="Участники" FontSize="24" HorizontalOptions="Center" />
+                <Grid>
+                    <VerticalStackLayout 
+                    BindableLayout.ItemsSource="{Binding Participant}" 
+                    Margin="{StaticResource LayoutPadding}" 
+                    Spacing="{StaticResource LayoutSpacing}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="apimodels:UserDto">
+                                <Border>
+                                    <VerticalStackLayout Padding="10">
+                                        <Label Text="{Binding UserName}" FontSize="24" />
+                                        <Label Text="{Binding PhoneNumber}" />
+                                    </VerticalStackLayout>
+                                    <!--<Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding NavigateToProjectCommand, Source={RelativeSource AncestorType={x:Type pageModels:EventListPageModel}}, x:DataType=pageModels:EventListPageModel}" CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>-->
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                </Grid>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

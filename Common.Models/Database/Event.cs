@@ -30,6 +30,8 @@ public class EventDto
 
     public string Address { get; set; }
 
+    public bool IsCreator { get; set; }
+
     public ICollection<UserEventDto> Paticipants { get; set; }
 
     public ICollection<PostDto> Posts { get; set; }

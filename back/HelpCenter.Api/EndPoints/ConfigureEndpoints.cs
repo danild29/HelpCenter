@@ -84,8 +84,17 @@ public static class ConfigureEndpoints
                 .ThenInclude(x => x.Participant)
                 .Include(x => x.Posts)
                 .ThenInclude(x => x.Messages)
+                .OrderBy(x => x.StartDate)
                 .FirstAsync(x => x.Id == eventId);
 
+
+            foreach (Post post in e.Posts)
+            {
+                post.Messages = [.. post.Messages.OrderBy(x => x.Created)];
+            }
+
+            string userId = user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            e.IsCreator = e.Creator.Id == userId;
             return e;
         })
         .RequireAuthorization();
@@ -98,7 +107,7 @@ public static class ConfigureEndpoints
             User u = await context.Users.FindAsync(userId);
             Event e = await context.Events.FindAsync(data.eventId);
 
-            var ue = new Post
+            var post = new Post
             {
                 Id = Guid.NewGuid(),
                 Title = data.Title,
@@ -108,11 +117,11 @@ public static class ConfigureEndpoints
                 Pusblished = DateTimeOffset.Now,
             };
 
-            context.Posts.Add(ue);
+            context.Posts.Add(post);
 
             await context.SaveChangesAsync();
 
-            return ue;
+            return post;
         })
         .RequireAuthorization();
 

@@ -1,6 +1,7 @@
 ﻿
 
 
+using System.ComponentModel.DataAnnotations.Schema;
 using Common.Models.Database;
 
 namespace HelpCenter.Api.Database;
@@ -24,6 +25,8 @@ public class Event
     public string City { get; set; }
 
     public string Address { get; set; }
+
+    public bool IsCreator { get; set; }
 
     public ICollection<UserEvent> Paticipants { get; set; }
     public ICollection<Post> Posts { get; set; }

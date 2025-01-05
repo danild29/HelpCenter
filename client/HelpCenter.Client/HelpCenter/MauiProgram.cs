@@ -12,6 +12,7 @@ public class Routes
     public const string EventCreatePage = "create-event";
     public const string ProjectDetailPage = "project";
     public const string TaskDetailPage = "task";
+    public const string CreateAccountPage = "register";
 }
 
 public static class MauiProgram
@@ -62,6 +63,7 @@ public static class MauiProgram
         builder.Services.AddTransientWithShellRoute<EventCreatePage, EventCreatePageModel>(Routes.EventCreatePage);
         builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>(Routes.ProjectDetailPage);
         builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>(Routes.TaskDetailPage);
+        builder.Services.AddTransientWithShellRoute<CreateAccountPage, CreateAccountViewModel>(Routes.CreateAccountPage);
 
         return builder.Build();
     }
