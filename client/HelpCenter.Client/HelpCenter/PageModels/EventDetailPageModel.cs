@@ -205,6 +205,11 @@ namespace HelpCenter.PageModels
         [RelayCommand]
         private async Task AddComment(Guid postId)
         {
+            if (string.IsNullOrEmpty(Comment))
+            {
+                return;
+            }
+
             try
             {
                 CreateMessageRequest request = new CreateMessageRequest(Comment, postId);

@@ -168,12 +168,12 @@
                                                     </VerticalStackLayout>
 
                                                     <sf:SfTextInputLayout Hint="...">
-                                                        <Entry Text="{Binding Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, Path=Comment}" />
+                                                        <Entry Text="{Binding Comment, Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, x:DataType=pageModels:EventDetailPageModel}" />
                                                     </sf:SfTextInputLayout>
 
                                                     <Button Text="Comment" 
                                                         HeightRequest="{OnIdiom 44, Desktop=60}"
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, Path=AddCommentCommand}"
+                                                        Command="{Binding AddCommentCommand, Source={RelativeSource AncestorType={x:Type pageModels:EventDetailPageModel}}, x:DataType=pageModels:EventDetailPageModel}"
                                                         CommandParameter="{Binding Id}"
                                                         />
                                                 </StackLayout>
