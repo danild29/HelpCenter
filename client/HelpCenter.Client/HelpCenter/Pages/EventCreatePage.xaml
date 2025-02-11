@@ -9,7 +9,8 @@
              xmlns:fonts="clr-namespace:Fonts"
              x:Class="HelpCenter.Pages.EventCreatePage"
              x:DataType="pageModels:EventCreatePageModel"
-             Title="CreateEvent">
+             Shell.NavBarIsVisible="False"
+             >
 
     <ContentPage.Resources>
         <DataTemplate x:Key="NormalTagTemplate" x:DataType="models:Tag">

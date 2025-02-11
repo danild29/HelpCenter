@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HelpCenter.Data.Http;
 using Refit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HelpCenter.PageModels;
 
@@ -94,6 +95,12 @@ public partial class LoginViewModel : ObservableObject
         {
             ErrorResponse? error = await ex.Err();
             LoginMessage = error?.GetError;
+            TurnLoginMessage = true;
+        }
+        catch (HttpRequestException ex)
+        {
+            LoginMessage = "Сервис сейчас недоступен. Попробуйте позже.";
+            TurnLoginMessage = true;
         }
         catch (Exception ex)
         {

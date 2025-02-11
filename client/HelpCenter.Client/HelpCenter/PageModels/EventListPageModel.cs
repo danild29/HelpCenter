@@ -16,6 +16,9 @@ namespace HelpCenter.PageModels
         private List<EventDto> _projects = [];
         private readonly IUserApi api;
 
+        [ObservableProperty]
+        private string _icon = FluentUI.people_24_regular;
+
         public EventListPageModel(
             IUserApi api,
             ProjectRepository projectRepository)
@@ -42,7 +45,7 @@ namespace HelpCenter.PageModels
             => Shell.Current.GoToAsync($"{Routes.EventDetailPage}?id={e.Id}");
 
         [RelayCommand]
-        async Task AddProject()
+        async Task AddEvent()
         {
             await Shell.Current.GoToAsync(Routes.EventCreatePage);
         }
