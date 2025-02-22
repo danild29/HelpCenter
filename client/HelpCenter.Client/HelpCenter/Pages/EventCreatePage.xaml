@@ -51,61 +51,82 @@
             x:Key="ChipDataTemplateSelector"
             NormalTagTemplate="{StaticResource NormalTagTemplate}"
             SelectedTagTemplate="{StaticResource SelectedTagTemplate}"/>
+        
+        <!--<ResourceDictionary>
+            --><!-- Цвета --><!--
+            <Color x:Key="PrimaryColor">#6200EE</Color>
+            <Color x:Key="SecondaryColor">#03DAC6</Color>
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+            <Color x:Key="TextColor">#000000</Color>
+
+            --><!-- Стили для кнопок --><!--
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="20,10" />
+            </Style>
+
+            --><!-- Стили для текстовых полей --><!--
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="PlaceholderColor" Value="#999999" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            --><!-- Стили для заголовков --><!--
+            <Style x:Key="Title2" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Margin" Value="0,10,0,5" />
+            </Style>
+        </ResourceDictionary>-->
     </ContentPage.Resources>
 
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem
-            Text="Delete"
-            Command="{Binding DeleteCommand}"
-            Order="Primary"
-            Priority="0"
-            IconImageSource="{StaticResource IconDelete}" />
-    </ContentPage.ToolbarItems>-->
 
     <Grid>
         <ScrollView>
             <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
 
-                <sf:SfTextInputLayout 
-                    Hint="Title" >
-                    <Entry
-                        Text="{Binding Title}" />
+
+
+
+                <sf:SfTextInputLayout Hint="Название мероприятия" >
+                    <Entry Text="{Binding Title}" />
                 </sf:SfTextInputLayout>
 
-                <sf:SfTextInputLayout Hint="City">
+                <sf:SfTextInputLayout Hint="Город">
                     <Entry Text="{Binding City}" />
                 </sf:SfTextInputLayout>
 
-                <sf:SfTextInputLayout Hint="Phone">
+                <sf:SfTextInputLayout Hint="Телефон">
                     <Entry Text="{Binding Phone}" />
                 </sf:SfTextInputLayout>
 
-                <sf:SfTextInputLayout  
-                    Hint="StartDate">
-                    <DatePicker Date="{Binding StartDate}" />
-                </sf:SfTextInputLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <sf:SfTextInputLayout Hint="Дата">
+                        <DatePicker Date="{Binding StartDate}" />
+                    </sf:SfTextInputLayout>
+                    <sf:SfTextInputLayout Hint="Время">
+                        <TimePicker Time="{Binding StartDate}" />
+                    </sf:SfTextInputLayout>
+                </HorizontalStackLayout>
 
-                <sf:SfTextInputLayout  Hint="Address">
+                <sf:SfTextInputLayout  Hint="Адрес мероприятия">
                     <Entry
                        Text="{Binding Address}" />
                 </sf:SfTextInputLayout>
 
-                <sf:SfTextInputLayout  Hint="Description">
+                <sf:SfTextInputLayout  Hint="Описание мероприятия">
                     <Entry
                        Text="{Binding Description}" />
                 </sf:SfTextInputLayout>
 
-                <!--<sf:SfTextInputLayout 
-                    Hint="Category">
-                    <Picker 
-                        ItemsSource="{Binding Categories}"
-                        SelectedItem="{Binding Category}"
-                        SelectedIndex="{Binding CategoryIndex}" />
-                </sf:SfTextInputLayout>-->
 
-                <Label 
-                    Text="Icon" 
-                    Style="{StaticResource Title2}"/>
+                <Label Text="Иконка мероприятия" Style="{StaticResource Title2}"/>
                 <CollectionView 
                     HeightRequest="44" Margin="0,0,0,15"
                     SelectionMode="Single"
@@ -152,7 +173,7 @@
 
 
                 <Label 
-                    Text="Tags" 
+                    Text="Теги" 
                     Style="{StaticResource Title2}"/>
                 <ScrollView Orientation="Horizontal">
                     <HorizontalStackLayout 
@@ -163,42 +184,15 @@
                         BindableLayout.ItemTemplateSelector="{StaticResource ChipDataTemplateSelector}"/>
                 </ScrollView>
 
-                <Button Text="Save" 
+                <Button Text="Создать" 
                     HeightRequest="{OnIdiom 44, Desktop=60}"
                     Command="{Binding SaveCommand}" />
 
-                <!--<Grid HeightRequest="44">
-                    <Label 
-                        Text="Tasks" 
-                        Style="{StaticResource Title2}" 
-                        VerticalOptions="Center"/>
-                    <ImageButton 
-                        Source="{StaticResource IconClean}"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Aspect="Center"
-                        HeightRequest="44"
-                        WidthRequest="44"
-                        IsVisible="{Binding HasCompletedTasks}"
-                        Command="{Binding CleanTasksCommand}"
-                        />
-                </Grid>
-                <VerticalStackLayout 
-                    Spacing="{StaticResource LayoutSpacing}"
-                    BindableLayout.ItemsSource="{Binding Tasks}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <controls:TaskView TaskCompletedCommand="{Binding TaskCompletedCommand, Source={RelativeSource AncestorType={x:Type pageModels:ProjectDetailPageModel}}, x:DataType=pageModels:ProjectDetailPageModel}" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>-->
-                
                 
             </VerticalStackLayout>
 
         </ScrollView>
 
-        <!--<controls:AddButton Command="{Binding AddTaskCommand}" />-->
     </Grid>
 
 </ContentPage>

@@ -11,7 +11,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="HelpCenter.Pages.EventDetailPage"
              x:DataType="pageModels:EventDetailPageModel"
-             Title="Event">
+             >
 
     <ContentPage.Resources>
         <DataTemplate x:Key="NormalTagTemplate" x:DataType="models:Tag">
@@ -56,7 +56,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem
-            Text="Delete"
+            Text="Удалить"
             Command="{Binding DeleteCommand}"
             Order="Primary"
             Priority="0"
@@ -66,23 +66,23 @@
     <Grid>
         <ScrollView>
             <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
-                <sf:SfTextInputLayout>
-                    <Label
+                <sf:SfTextInputLayout  Hint="Название"  OutlineCornerRadius="30" >
+                    <Entry IsReadOnly="True"
                         Text="{Binding Title}" />
                 </sf:SfTextInputLayout>
 
 
-                <sf:SfTextInputLayout>
-                    <Label Text="{Binding City}" />
+                <sf:SfTextInputLayout Hint="Город"  OutlineCornerRadius="30">
+                    <Entry IsReadOnly="True" Text="{Binding City}" />
                 </sf:SfTextInputLayout>
 
-                <sf:SfTextInputLayout>
-                    <Label Text="{Binding Phone}" />
+                <sf:SfTextInputLayout  Hint="Контактный номер"  OutlineCornerRadius="30">
+                    <Entry IsReadOnly="True" Text="{Binding Phone}" />
                 </sf:SfTextInputLayout>
 
 
-                <sf:SfTextInputLayout>
-                    <Label
+                <sf:SfTextInputLayout  OutlineCornerRadius="30">
+                    <Entry IsReadOnly="True"
                         Text="{Binding Description}" />
                 </sf:SfTextInputLayout>
 
@@ -95,7 +95,7 @@
                 </sf:SfTextInputLayout>-->
 
                 <Label 
-                    Text="Tags" 
+                    Text="Теги" 
                     Style="{StaticResource Title2}"/>
                 <ScrollView Orientation="Horizontal">
                     <HorizontalStackLayout 
@@ -106,24 +106,25 @@
                         BindableLayout.ItemTemplateSelector="{StaticResource ChipDataTemplateSelector}"/>
                 </ScrollView>
 
-                <Button Text="Записаться на мероприятие" 
+                <Button Text="Записаться на мероприятие"   CornerRadius="30"
                     HeightRequest="{OnIdiom 44, Desktop=60}"
                     Command="{Binding SignInCommand}" />
 
-                <Label Text="Посты" FontSize="24" HorizontalOptions="Center" />
 
                 <Grid IsVisible="{Binding IsCreator}">
-                    <Border>
+                    <Label Grid.Row="1" Text="Посты" FontSize="24" HorizontalOptions="Center" />
+                    <Border Grid.Row="2">
                         <StackLayout>
-                            <sf:SfTextInputLayout>
+                            <sf:SfTextInputLayout Hint="Заголовок поста"  OutlineCornerRadius="30">
                                 <Entry Text="{Binding PostTitle}" />
                             </sf:SfTextInputLayout>
 
-                            <sf:SfTextInputLayout>
+                            <sf:SfTextInputLayout Hint="Описание поста" OutlineCornerRadius="30">
                                 <Entry Text="{Binding PostContent}" />
                             </sf:SfTextInputLayout>
     
                             <Button Text="Добавить пост" 
+                                     CornerRadius="30"
                                 HeightRequest="{OnIdiom 44, Desktop=60}"
                                 Command="{Binding AddPostCommand}" />
                         </StackLayout>

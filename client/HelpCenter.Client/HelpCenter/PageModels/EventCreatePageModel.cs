@@ -93,6 +93,14 @@ namespace HelpCenter.PageModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
+            try
+            {
+                AllTags = _tagRepository.ListAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception)
+            {
+            }
+
             if (query.ContainsKey("id"))
             {
                 var id = Guid.Parse(query["id"]!.ToString()!);
@@ -133,7 +141,7 @@ namespace HelpCenter.PageModels
                     _event = await api.GetEvent(id);
 
                     //_project = await _projectRepository.GetAsync(id);
-
+                    AllTags = await _tagRepository.ListAsync();
                 }
                 catch (Exception ex)
                 {
@@ -195,6 +203,7 @@ namespace HelpCenter.PageModels
                 newE.City = City;
                 newE.Description = Description;
                 newE.Address = Address;
+                newE.StartDate = StartDate;
 
                 EventDto created = await api.CreateEvent(newE);
 
